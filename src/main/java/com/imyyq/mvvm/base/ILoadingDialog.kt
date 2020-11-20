@@ -1,6 +1,8 @@
 package com.imyyq.mvvm.base
 
 import android.app.Dialog
+import android.text.TextUtils
+import android.view.View
 import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
@@ -23,7 +25,15 @@ interface ILoadingDialog {
         ) {
             dialog.setOnCancelListener { onCancelLoadingDialog() }
         }
-        dialog.findViewById<TextView>(loadingDialogLayoutMsgId())?.text = msg
+        val idTvMsg = dialog.findViewById<TextView>(loadingDialogLayoutMsgId())
+        idTvMsg?.let {
+            if (!TextUtils.isEmpty(msg)) {
+                it.text = msg
+                it.visibility = View.VISIBLE
+            } else {
+                it.visibility = View.GONE
+            }
+        }
     }
 
     /**
